@@ -303,3 +303,22 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lightbox__next { right: 10px; }
 .lightbox__prev:hover,
 .lightbox__next:hover { color: var(--fg); }
+/* ---------- MULTI-IMAGE ROW ---------- */
+.work__entry-imgs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.work__entry-imgs .work__entry-img {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.work__entry-imgs .work__entry-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+}

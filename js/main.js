@@ -24,16 +24,17 @@ if (hamburger && mobileMenu) {
 }
 
 // ─── LAZY IMAGE FALLBACK ──────────────────────────────────
-document.querySelectorAll('.work__img-wrap img').forEach(img => {
+document.querySelectorAll('.work__entry-img img').forEach(img => {
   img.addEventListener('error', () => {
     img.style.opacity = '0';
-    const wrap = img.closest('.work__img-wrap');
+    const wrap = img.closest('.work__entry-img');
     if (wrap) wrap.style.background = 'linear-gradient(135deg, #e2e1dd 0%, #d4d3cf 100%)';
   });
 });
 
 // ─── LIGHTBOX ─────────────────────────────────────────────
-const items = document.querySelectorAll('.work__item');
+// Collect ALL clickable images across all entries
+const allImgs = document.querySelectorAll('.work__entry-img');
 let current = 0;
 
 // Build lightbox HTML
@@ -56,9 +57,10 @@ const lbCaption = lb.querySelector('.lightbox__caption');
 
 function openLightbox(index) {
   current = index;
-  const item = items[current];
-  const src = item.querySelector('img').src;
-  const caption = item.querySelector('.work__caption').textContent;
+  const imgEl = allImgs[current];
+  const src = imgEl.dataset.lightboxSrc || imgEl.querySelector('img').src;
+  const entry = imgEl.closest('.work__entry');
+  const caption = entry ? entry.querySelector('.work__entry-title').textContent : '';
   lbImg.src = src;
   lbCaption.textContent = caption;
   lb.classList.add('open');
@@ -71,30 +73,25 @@ function closeLightbox() {
 }
 
 function showNext() {
-  current = (current + 1) % items.length;
+  current = (current + 1) % allImgs.length;
   openLightbox(current);
 }
 
 function showPrev() {
-  current = (current - 1 + items.length) % items.length;
+  current = (current - 1 + allImgs.length) % allImgs.length;
   openLightbox(current);
 }
 
-// Click on grid image to open
-items.forEach((item, i) => {
-  item.addEventListener('click', (e) => {
-    e.preventDefault();
-    openLightbox(i);
-  });
+allImgs.forEach((img, i) => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => openLightbox(i));
 });
 
-// Controls
 lb.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
 lb.querySelector('.lightbox__overlay').addEventListener('click', closeLightbox);
 lb.querySelector('.lightbox__next').addEventListener('click', showNext);
 lb.querySelector('.lightbox__prev').addEventListener('click', showPrev);
 
-// Keyboard navigation
 document.addEventListener('keydown', (e) => {
   if (!lb.classList.contains('open')) return;
   if (e.key === 'ArrowRight') showNext();

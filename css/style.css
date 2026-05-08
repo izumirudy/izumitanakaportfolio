@@ -57,7 +57,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .nav__logo {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   letter-spacing: 0.01em;
   font-weight: 400;
 }
@@ -71,7 +71,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .nav__link {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.85rem;
   letter-spacing: 0.06em;
   color: var(--fg-muted);
   text-transform: uppercase;
